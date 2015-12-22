@@ -10,5 +10,8 @@
     "bitcoin"
   ],
   "author": "Peter Toth <email@petertoth.sk> (http://www.petertoth.sk)",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^2.3.4"
+  }
 }
