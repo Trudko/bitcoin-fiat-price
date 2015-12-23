@@ -28,16 +28,18 @@ var BitcoinTransactionPrice = function() {
 
       var fee = converter.toBitcoin(totalInputsValue - totalOutputsValue);
 
-      var obj =  {
-          intpus: inputs,
+      return {
+          inputs: inputs,
           outputs: outputs,
           fee: fee
       };
+
     }, function(error) {
 
     });
   }
 
 }
+
 
 module.exports = BitcoinTransactionPrice;
