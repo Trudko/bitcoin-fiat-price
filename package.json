@@ -19,6 +19,7 @@
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
     "mocha": "^2.3.4",
+    "request-promise": "^1.0.2",
     "satoshi-bitcoin": "^0.3.0",
     "sinon": "^1.17.2"
   }

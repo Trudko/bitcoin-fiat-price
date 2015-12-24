@@ -31,7 +31,8 @@ describe('Get price function', function() {
         }, {
           value: 2000000,
         }
-      ]
+      ],
+      time: 1437205525
     };
 
     blockExplorerStub.returns(Promise.resolve(blockExplorerStubResolveValue));
@@ -41,6 +42,11 @@ describe('Get price function', function() {
       expect(obj.inputs).to.deep.equal([0.76521777]);
       expect(obj.outputs).to.deep.equal([0.74520777, 0.02]);
       expect(obj.fee).to.equal(0.00001);
+      expect(obj.inputsInFiat).to.deep.equal([211.360226]);
+      expect(obj.outputsFiat).to.deep.equal([204.55, 5.49]);
+      expect(obj.feeFiat).to.equal(0.0027449380000000006);
+      expect(obj.bitcoinPriceFiat).to.equal(274.4938);
+      expect(obj.currency).to.equal('USD');
       done();
     });
   });
