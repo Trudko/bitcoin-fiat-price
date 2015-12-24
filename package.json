@@ -9,6 +9,10 @@
   "keywords": [
     "bitcoin"
   ],
+  "repository" : {
+    "type" : "git"
+  , "url" : "https://github.com/Trudko/bitcoin-transaction-price.gits"
+  },
   "author": "Peter Toth <email@petertoth.sk> (http://www.petertoth.sk)",
   "license": "ISC",
   "devDependencies": {
