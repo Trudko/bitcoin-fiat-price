@@ -1,6 +1,7 @@
 var blockExplorer = require('blockchain.info/blockexplorer');
 var converter = require('satoshi-bitcoin');
 var requestPromise = require('request-promise');
+var Big = require('big.js');
 
 var BitcoinTransactionPrice = function() {
 
@@ -39,23 +40,23 @@ var BitcoinTransactionPrice = function() {
           fee: fee
       };
 
-    }, function(error) {
-      console.log(errror);
     }).then(function(value) {
       var transactionDate = new Date(transactionUTCtime);
       var transactionDateISO =  transactionDate.toISOString().split('T')[0];
-
       var url = 'https://api.coindesk.com/v1/bpi/historical/close.json?currency=' + currency + '&start=' + transactionDateISO + '&end=' + transactionDateISO;
+      
       return requestPromise(url).then(function(marketData) {
           var obj = JSON.parse(marketData).bpi;
           var btcPriceInFiat = obj[Object.keys(obj)[0]];
 
           value.inputsInFiat = value.inputs.map(function(input) {
-            return (btcPriceInFiat * input.toFixed(2));
+            var bigWrapper = new Big(btcPriceInFiat);
+            return Number(bigWrapper.times(input).toFixed(2));
           });
 
           value.outputsFiat = value.outputs.map(function(output) {
-            return  (btcPriceInFiat * output).toFixed(2);
+            var bigWrapper = new Big(btcPriceInFiat);
+            return Number(bigWrapper.times(output).toFixed(2));
           });
 
           value.feeFiat = (btcPriceInFiat * value.fee);

@@ -9,9 +9,9 @@
   "keywords": [
     "bitcoin"
   ],
-  "repository" : {
-    "type" : "git"
-  , "url" : "https://github.com/Trudko/bitcoin-transaction-price.gits"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Trudko/bitcoin-transaction-price.gits"
   },
   "author": "Peter Toth <email@petertoth.sk> (http://www.petertoth.sk)",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "mocha": "^2.3.4"
   },
   "dependencies": {
+    "big.js": "^3.1.3",
     "blockchain.info": "^2.1.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^5.2.0",
