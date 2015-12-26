@@ -48,7 +48,7 @@ describe('Get price function', function() {
     blockExplorerStub.returns(Promise.resolve(blockExplorerStubResolveValue));
     bitcoinTransactionPrice = new BitcoinTransactionPrice();
 
-    return bitcoinTransactionPrice.getPrice(95035819).then(function(obj) {
+    return bitcoinTransactionPrice.getFiatPrice(95035819).then(function(obj) {
       expect(obj).to.deep.equal(expectedResult);
       done();
     }).catch(done);

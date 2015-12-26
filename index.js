@@ -5,7 +5,7 @@ var Big = require('big.js');
 
 var BitcoinTransactionPrice = function() {
 
-  this.getPrice = function(trxID, currency) {
+  this.getFiatPrice = function(trxID, currency) {
     var currency = currency || 'USD';
     var transactionUTCtime = 0;
 
@@ -44,7 +44,7 @@ var BitcoinTransactionPrice = function() {
       var transactionDate = new Date(transactionUTCtime);
       var transactionDateISO =  transactionDate.toISOString().split('T')[0];
       var url = 'https://api.coindesk.com/v1/bpi/historical/close.json?currency=' + currency + '&start=' + transactionDateISO + '&end=' + transactionDateISO;
-      
+
       return requestPromise(url).then(function(marketData) {
           var obj = JSON.parse(marketData).bpi;
           var btcPriceInFiat = obj[Object.keys(obj)[0]];
