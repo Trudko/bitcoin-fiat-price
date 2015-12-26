@@ -4,7 +4,7 @@
   "description": "NPM package which return price of a bitcoin transaction in fiat currency",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [
     "bitcoin"
