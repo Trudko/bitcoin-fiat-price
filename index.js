@@ -18,7 +18,7 @@ var BitcoinTransactionPrice = function() {
     });
   }
 
-  var getAddressBitcoiBallance = function(addressHash) {
+  var getAddressBitcoinBallance = function(addressHash) {
     var url = 'https://blockchain.info/q/addressbalance/' + addressHash;
     return requestPromise(url).then(function(walletBallanceInSatoshi) {
       return converter.toBitcoin(walletBallanceInSatoshi);
