@@ -7,6 +7,7 @@ var BitcoinTransactionPrice = function() {
   var transactionUTCtime = 0;
 
   this.getAdressBalance = function(addressHash, currency) {
+    var currency = currency || 'USD';
     var that = this;
     return getAddressBitcoiBallance(addressHash).then(function(addressbalance) {
       return that.getCurrentFiatPrice(currency).then(function (currentBitcoinPriceInFiat) {
