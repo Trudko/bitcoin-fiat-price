@@ -6,6 +6,13 @@ var Big = require('big.js');
 var BitcoinTransactionPrice = function() {
   var transactionUTCtime = 0;
 
+  this.getCurrentFiatPrice = function (currency) {
+    var url = 'https://api.coindesk.com/v1/bpi/currentprice/' + currency + '.json';
+    return requestPromise(url).then(function (priceData) {
+      return JSON.parse(priceData).bpi[currency].rate;
+    });
+  }
+
   this.getFiatPrice = function(trxID, currency) {
     var currency = currency || 'USD';
 
