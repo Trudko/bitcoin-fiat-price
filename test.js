@@ -31,6 +31,10 @@ describe('Get address ballance', function() {
       done();
     }).catch(done);
   })
+
+  afterEach(function () {
+    nock.enableNetConnect();
+  })
 });
 
 describe('Get price function', function() {
@@ -71,6 +75,13 @@ describe('Get price function', function() {
       currency: 'USD'
     }
 
+    nock('https://api.coindesk.com')
+    .get('/v1/bpi/historical/close.json?currency=USD&start=2015-07-18&end=2015-07-18')
+    .reply(200, {
+      'bpi': {
+        '2015-07-18': 274.4938
+      }
+    });
 
     blockExplorerStub.returns(Promise.resolve(blockExplorerStubResolveValue));
     bitcoinTransactionPrice = new BitcoinTransactionPrice();
