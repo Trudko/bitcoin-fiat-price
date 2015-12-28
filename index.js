@@ -1,8 +1,8 @@
-var blockExplorer = require('blockchain.info/blockexplorer');
-var converter = require('satoshi-bitcoin');
-var requestPromise = require('request-promise');
-var Big = require('big.js');
-var q = require('q');
+var blockExplorer = require('blockchain.info/blockexplorer'),
+    converter = require('satoshi-bitcoin'),
+    requestPromise = require('request-promise'),
+    Big = require('big.js'),
+    q = require('q');
 
 var BitcoinTransactionPrice = function() {
   var transactionUTCtime = 0;
@@ -10,6 +10,7 @@ var BitcoinTransactionPrice = function() {
   this.getAdressBalance = function(addressHash, currency) {
     var currency = currency || 'USD';
     var that = this;
+
     return q.all([getAddressBitcoinBallance(addressHash), this.getCurrentFiatPrice(currency)])
     .spread(function(addressbalance, currentBitcoinPriceInFiat) {
       var bigWrapper = new Big(currentBitcoinPriceInFiat);
@@ -21,8 +22,9 @@ var BitcoinTransactionPrice = function() {
   }
 
   this.getCurrentFiatPrice = function(currency) {
-    var currency = currency || 'USD';
-    var url = 'https://api.coindesk.com/v1/bpi/currentprice/' + currency + '.json';
+    var currency = currency || 'USD',
+        url = 'https://api.coindesk.com/v1/bpi/currentprice/' + currency + '.json';
+
     return requestPromise(url).then(function (priceData) {
       return JSON.parse(priceData).bpi[currency].rate;
     });
@@ -44,9 +46,9 @@ var BitcoinTransactionPrice = function() {
     return blockExplorer.getTx(trxID).then(function(value) {
       transactionUTCtime = Number.parseInt(value.time) * 1000;
 
-      var transactionDetails = value;
-      var inputs = transactionDetails.inputs;
-      var outputs = transactionDetails.out;
+      var transactionDetails = value,
+          inputs = transactionDetails.inputs,
+          outputs = transactionDetails.out;
 
       var totalInputsValue = inputs.reduce(function (input1, input2) {
         return input1.prev_out.value + input2.prev_out.value;
@@ -64,27 +66,26 @@ var BitcoinTransactionPrice = function() {
         return converter.toBitcoin(output.value);
       });
 
-      var fee = converter.toBitcoin(totalInputsValue - totalOutputsValue);
-
       return {
           inputs: inputs,
           outputs: outputs,
-          fee: fee
+          fee: converter.toBitcoin(totalInputsValue - totalOutputsValue)
       };
     });
   }
 
   var getAddressBitcoinBallance = function(addressHash) {
     var url = 'https://blockchain.info/q/addressbalance/' + addressHash;
+
     return requestPromise(url).then(function(walletBallanceInSatoshi) {
       return converter.toBitcoin(walletBallanceInSatoshi);
     });
   }
 
   var getFiatValue = function(transactionInfo, currency) {
-    var transactionDate = new Date(transactionUTCtime);
-    var transactionDateISO =  transactionDate.toISOString().split('T')[0];
-    var url = 'https://api.coindesk.com/v1/bpi/historical/close.json?currency=' + currency + '&start=' + transactionDateISO + '&end=' + transactionDateISO;
+    var transactionDate = new Date(transactionUTCtime),
+        transactionDateISO =  transactionDate.toISOString().split('T')[0],
+        url = 'https://api.coindesk.com/v1/bpi/historical/close.json?currency=' + currency + '&start=' + transactionDateISO + '&end=' + transactionDateISO;
 
     return requestPromise(url).then(function(marketData) {
         var obj = JSON.parse(marketData).bpi;
