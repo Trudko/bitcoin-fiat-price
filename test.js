@@ -5,7 +5,7 @@ var chai = require('chai');
     blockExplorer = require('blockchain.info/blockexplorer'),
     nock = require('nock');
 
-var BitcoinFiatPrice = require('./lib/bitcoinFiatPrice');
+var bitcoinFiatPrice = require('./lib/bitcoinFiatPrice');
 
 describe('Get address fiat balance', function() {
 
@@ -24,8 +24,7 @@ describe('Get address fiat balance', function() {
       }
     });
 
-    var bitcoinFiatPrice = new BitcoinFiatPrice();
-    bitcoinFiatPrice.getAdressFiatBalance('12zpVdwFvv6imJkndpoNBaWikiyv3ksz3Y').then(function(result) {
+    bitcoinFiatPrice.getAddressFiatBalance('12zpVdwFvv6imJkndpoNBaWikiyv3ksz3Y').then(function(result) {
       expect(result).to.equal(300);
       done();
     }).catch(done);
@@ -83,9 +82,8 @@ describe('Get price function', function() {
     });
 
     blockExplorerStub.returns(Promise.resolve(blockExplorerStubResolveValue));
-    var bitcoinFiatPrice = new BitcoinFiatPrice();
 
-    return bitcoinFiatPrice.getFiatPrice(95035819).then(function(obj) {
+    return bitcoinFiatPrice.getTransactionFiatPrice(95035819).then(function(obj) {
       expect(obj).to.deep.equal(expectedResult);
       done();
     }).catch(done);
