@@ -2,7 +2,7 @@
   "name": "bitcoin-transaction-price",
   "version": "1.0.0",
   "description": "NPM package which return price of a bitcoin transaction in fiat currency",
-  "main": "index.js",
+  "main": "lib/bitcoinFiatPrice.js",
   "scripts": {
     "test": "mocha"
   },
