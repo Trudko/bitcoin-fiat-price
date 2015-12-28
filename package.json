@@ -1,7 +1,7 @@
 {
-  "name": "bitcoin-transaction-price",
+  "name": "bitcoin-fiat-price",
   "version": "1.0.0",
-  "description": "NPM package which return price of a bitcoin transaction in fiat currency",
+  "description": "Returns the current value, value of a transaction or an address in a given fiat currency.",
   "main": "lib/bitcoinFiatPrice.js",
   "scripts": {
     "test": "mocha"
@@ -11,23 +11,22 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Trudko/bitcoin-transaction-price.git"
+    "url": "https://github.com/Trudko/bitcoin-fiat-price.git"
   },
   "author": "Peter Toth <email@petertoth.sk> (http://www.petertoth.sk)",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "mocha": "^2.3.4",
-    "nock": "^3.6.0"
+    "nock": "^3.6.0",
+    "sinon": "^1.17.2",
+    "chai-as-promised": "^5.2.0",
+    "chai": "^3.4.1"
   },
   "dependencies": {
     "big.js": "^3.1.3",
     "blockchain.info": "^2.1.0",
-    "chai": "^3.4.1",
-    "chai-as-promised": "^5.2.0",
-    "mocha": "^2.3.4",
     "q": "^1.4.1",
     "request-promise": "^1.0.2",
-    "satoshi-bitcoin": "^0.3.0",
-    "sinon": "^1.17.2"
+    "satoshi-bitcoin": "^0.3.0"
   }
 }
