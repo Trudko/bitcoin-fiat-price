@@ -2,9 +2,36 @@ var chai = require('chai');
     expect = chai.expect,
     chaiAsPromised = require('chai-as-promised'),
     sinon = require('sinon'),
-    blockExplorer = require('blockchain.info/blockexplorer');
+    blockExplorer = require('blockchain.info/blockexplorer'),
+    nock = require('nock');
 
 var BitcoinTransactionPrice = require('./index');
+
+
+describe('Get address ballance', function() {
+
+  it('Should return 300 for a given address', function (done) {
+    nock('https://blockchain.info')
+    .get('/q/addressbalance/12zpVdwFvv6imJkndpoNBaWikiyv3ksz3Y')
+    .reply(200, 100000000);
+
+    nock('https://api.coindesk.com')
+    .get('/v1/bpi/currentprice/USD.json')
+    .reply(200, {
+      'bpi': {
+          'USD': {
+            'rate': 300
+          }
+      }
+    });
+
+    var foo = new BitcoinTransactionPrice();
+    foo.getAdressBalance('12zpVdwFvv6imJkndpoNBaWikiyv3ksz3Y').then(function(result) {
+      expect(result).to.equal(300);
+      done();
+    }).catch(done);
+  })
+});
 
 describe('Get price function', function() {
   var sandbox, blockExplorerStub;
