@@ -2,6 +2,7 @@ var blockExplorer = require('blockchain.info/blockexplorer');
 var converter = require('satoshi-bitcoin');
 var requestPromise = require('request-promise');
 var Big = require('big.js');
+var q = require('q');
 
 var BitcoinTransactionPrice = function() {
   var transactionUTCtime = 0;
@@ -9,24 +10,18 @@ var BitcoinTransactionPrice = function() {
   this.getAdressBalance = function(addressHash, currency) {
     var currency = currency || 'USD';
     var that = this;
-    return getAddressBitcoiBallance(addressHash).then(function(addressbalance) {
-      return that.getCurrentFiatPrice(currency).then(function (currentBitcoinPriceInFiat) {
-        var bigWrapper = new Big(currentBitcoinPriceInFiat);
-        return Number(bigWrapper.times(addressbalance).toFixed(2));
-      })
-    }).catch(function(error) {
+    return q.all([getAddressBitcoinBallance(addressHash), this.getCurrentFiatPrice(currency)])
+    .spread(function(addressbalance, currentBitcoinPriceInFiat) {
+      var bigWrapper = new Big(currentBitcoinPriceInFiat);
+      return Number(bigWrapper.times(addressbalance).toFixed(2));
+    })
+    .catch(function(error) {
       console.log(error.stack);
     });
   }
 
-  var getAddressBitcoinBallance = function(addressHash) {
-    var url = 'https://blockchain.info/q/addressbalance/' + addressHash;
-    return requestPromise(url).then(function(walletBallanceInSatoshi) {
-      return converter.toBitcoin(walletBallanceInSatoshi);
-    });
-  }
-
   this.getCurrentFiatPrice = function(currency) {
+    var currency = currency || 'USD';
     var url = 'https://api.coindesk.com/v1/bpi/currentprice/' + currency + '.json';
     return requestPromise(url).then(function (priceData) {
       return JSON.parse(priceData).bpi[currency].rate;
@@ -76,6 +71,13 @@ var BitcoinTransactionPrice = function() {
           outputs: outputs,
           fee: fee
       };
+    });
+  }
+
+  var getAddressBitcoinBallance = function(addressHash) {
+    var url = 'https://blockchain.info/q/addressbalance/' + addressHash;
+    return requestPromise(url).then(function(walletBallanceInSatoshi) {
+      return converter.toBitcoin(walletBallanceInSatoshi);
     });
   }
 
