@@ -66,11 +66,10 @@ describe('Get price function', function() {
       inputs: [ 0.76521777 ],
       outputs: [ 0.74520777, 0.02 ],
       fee: 0.00001,
-      inputsInFiat: [ 210.05 ],
+      inputsFiat: [ 210.05 ],
       outputsFiat: [ 204.55, 5.49 ],
       feeFiat: 0.0027449380000000006,
-      bitcoinPriceFiat: 274.4938,
-      currency: 'USD'
+      bitcoinPriceFiat: 274.4938
     }
 
     nock('https://api.coindesk.com')
