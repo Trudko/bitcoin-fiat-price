@@ -28,7 +28,7 @@ Returns object with few informations about transaction, specified by [txid - tra
 **bitcoinPriceFiat:** price of bitcoin used in calculations.
 
 ```javascript
-Example of result used it test:
+Example of result used in test:
 {
   inputs: [ 0.76521777 ],
   outputs: [ 0.74520777, 0.02 ],
