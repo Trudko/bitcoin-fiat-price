@@ -1,4 +1,4 @@
-Returns the current value of bitcoin, value of a transaction or an address in a given fiat currency. Price of bitcoin used in calculation is provided by Coindesk API.
+Returns the current value of bitcoin, value of a transaction or an address for a given fiat currency. Price of bitcoin used in calculation is provided by Coindesk API.
 
 Still early version API might change.
 

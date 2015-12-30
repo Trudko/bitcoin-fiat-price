@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-fiat-price",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Returns the current value, value of a transaction or an address in a given fiat currency.",
   "main": "lib/bitcoinFiatPrice.js",
   "scripts": {
