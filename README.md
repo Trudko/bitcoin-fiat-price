@@ -11,7 +11,7 @@ Returns balance in fiat currency specified by currencyCode for given bitcoin add
 Returns current price of 1 bitcoin in fiat currency specified by currencyCode(default value USD). If currencyCode is empty, it defaults to USD.
 
 ### getTransactionPrice(trxID, currencyCode)
-Returns object with few informations about transaction, specified by [txid - transaction identifier](https://bitcoin.org/en/developer-guide#block-chain-overview). Properties of object:
+Returns object with few informations about transaction, specified by [txid - transaction identifier](https://bitcoin.org/en/developer-guide#block-chain-overview). If currencyCode is empty, it defaults to USD. Properties of object:
 
 **iputs:** array of all inputs in bitcoin.
 
